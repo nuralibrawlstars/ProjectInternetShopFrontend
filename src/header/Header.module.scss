@@ -1,0 +1,63 @@
+.header {
+  // @extend %flexWrap;
+  // background: $header-bg;
+  // color: $header-title;
+}
+
+.navMenu {
+  display: flex;
+  gap: 30px;
+  background-color: white;
+  text-decoration: none;
+  color: gray;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 30px;
+}
+
+.burgerMenu span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: black;
+  margin: 5px 0;
+  transition: all 0.3 ease;
+}
+
+.burgerMenu {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .burgerMenu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 0;
+  }
+
+  .burgerMenu span {
+    display: flex;
+  }
+
+  .nav {
+    display: none;
+  }
+}
+
+.modalLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.closeIcon {
+  display: flex;
+  padding: 0;
+  margin-bottom: 20px;
+  justify-self: end;
+}
