@@ -12,47 +12,49 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
   },
 };
+
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <div>
+      <div className={s.headerLine}></div>
       <header className='container'>
         <nav className={s.nav}>
-          <div className={s.navMenu}>
+          <div className={s.navLinks}>
             <NavLink to='/'>
-              <img src='/logo-icon.png' />
+              <img src='/logo-icon.png' alt='logo' />
             </NavLink>
-
-            <NavLink to='/women'>Женщины</NavLink>
-
-            <NavLink to='/men'>Мужчины</NavLink>
-
-            <NavLink to='/girls'>Девочки</NavLink>
-
-            <NavLink to='/boys'>Мальчики</NavLink>
+            <NavLink
+              to='/women'
+              // className={({ isActive }) => (isActive ? `${s.active} ${s.link}` : `${s.link}`)}
+            >
+              Женщины
+            </NavLink>
+            <NavLink
+              to='/men'
+              // className={({ isActive }) => (isActive ? `${s.active} ${s.link}` : `${s.link}`)}
+            >
+              Мужчины
+            </NavLink>
           </div>
 
-          <div className={s.navMenu}>
-            <NavLink to='/cart'>
-              <img src='/cart-icon.png' />
-            </NavLink>
-
+          <div className={s.navLinks}>
             <NavLink to='/favorites'>
-              <img src='/heart-icon.png' />
+              <img src='/profile-icon.png' alt='profile icon' />
             </NavLink>
-
             <NavLink to='/profile'>
-              <img src='/profile-icon.png' />
+              <img src='/heart-icon.png' alt='heart icon' />
+            </NavLink>
+            <NavLink to='/cart'>
+              <img src='/cart-icon.png' alt='cart icon' />
             </NavLink>
           </div>
         </nav>
 
-        <div className={s.burgerMenu}>
+        <div className={s['burger-menu']}>
           <NavLink to='/'>
-            <img src='/logo-icon.png' />
+            <img src='/logo-icon.png' alt='logo' />
           </NavLink>
-
           <button onClick={() => setIsModalOpen(true)}>
             <span></span>
             <span></span>
@@ -60,41 +62,39 @@ const Header = () => {
           </button>
         </div>
       </header>
+
       {isModalOpen && (
         <Modal isOpen={isModalOpen} style={customStyles} contentLabel='Example Modal'>
           <button onClick={() => setIsModalOpen(false)} className={s.closeIcon}>
             X
           </button>
           <div className={s.modalLinks}>
-            <NavLink to='/women'>Женщины</NavLink>
-
-            <NavLink to='/men'>Мужчины</NavLink>
-
-            <NavLink to='/girls'>Девочки</NavLink>
-
-            <NavLink to='/boys'>Мальчики</NavLink>
-            <NavLink to='/cart'>
-              <img src='/cart-icon.png' />
+            <NavLink
+              to='/women'
+              // className={({ isActive }) => (isActive ? `${s.active} ${s.link}` : `${s.link}`)}
+            >
+              Женщины
             </NavLink>
-
+            <NavLink
+              to='/men'
+              // className={({ isActive }) => (isActive ? `${s.active} ${s.link}` : `${s.link}`)}
+            >
+              Мужчины
+            </NavLink>
             <NavLink to='/favorites'>
-              <img src='/heart-icon.png' />
+              <img src='/profile-icon.png' alt='profile icon' />
             </NavLink>
-
             <NavLink to='/profile'>
-              <img src='/profile-icon.png' />
+              <img src='/heart-icon.png' alt='heart icon' />
+            </NavLink>
+            <NavLink to='/cart'>
+              <img src='/cart-icon.png' alt='cart icon' />
             </NavLink>
           </div>
-          <form>
-            {/* <input />
-            <button>tab navigation</button>
-            {/* <button>stays</button>
-            <button>inside</button>
-            <button>the modal</button> */}
-          </form>
         </Modal>
       )}
     </div>
   );
 };
+
 export default Header;
