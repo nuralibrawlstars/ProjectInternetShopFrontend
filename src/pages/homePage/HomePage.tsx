@@ -1,5 +1,5 @@
-import Banner from '../banner/Banner';
-import QuickLinks from '../quick-links/QuickLinks';
+import Banner from '../../banner/Banner';
+import QuickLinks from '../../quick-links/QuickLinks';
 
 const HomePage = () => {
   return (
