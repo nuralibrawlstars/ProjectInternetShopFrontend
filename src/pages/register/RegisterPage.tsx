@@ -1,5 +1,6 @@
+import axios from 'axios';
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import s from './Register.module.scss';
 
 const RegisterPage = () => {
@@ -9,12 +10,37 @@ const RegisterPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [inputType, setInputType] = useState('password');
 
-  const submitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+
+  const submitFormHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(fullname, email, password, confirmPassword);
+    try {
+      if (password !== confirmPassword) {
+        alert('ne sovpadaet');
+        return;
+      }
+      if (fullname && email && password) {
+        const newUser = {
+          username: fullname,
+          email,
+          password,
+        };
+
+        const response = await axios.post('http://localhost:8000/users', newUser);
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        navigate('/');
+      } else {
+        alert('Please fill in all fields');
+      }
+    } catch (error) {
+      alert('Something went wrong.Please try again later.');
+      console.error(error);
+    }
   };
 
-  const inputTypeHandler = () => {
+  const inputTypeHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     if (inputType === 'password') {
       setInputType('text');
     } else {
