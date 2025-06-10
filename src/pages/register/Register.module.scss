@@ -53,3 +53,14 @@
 .sign {
   color: $prim;
 }
+.eye {
+  width: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: transparent;
+  position: absolute;
+  top: 40px;
+  right: 10px;
+}

@@ -1,12 +1,32 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './Register.module.scss';
 
 const RegisterPage = () => {
+  const [fullname, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [inputType, setInputType] = useState('password');
+
+  const submitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(fullname, email, password, confirmPassword);
+  };
+
+  const inputTypeHandler = () => {
+    if (inputType === 'password') {
+      setInputType('text');
+    } else {
+      setInputType('password');
+    }
+  };
+
   return (
     <>
       <div className='container'>
         <div className={s.register}>
-          <form action=''>
+          <form onSubmit={submitFormHandler}>
             <p className={s.p}>Sign up</p>
 
             <div>
@@ -14,8 +34,8 @@ const RegisterPage = () => {
               <input
                 className={s.input}
                 type='text'
-                // value={title}
-                // onChange={e => setTitle(e.target.value)}
+                value={fullname}
+                onChange={e => setFullName(e.target.value)}
               />
             </div>
             <div>
@@ -23,17 +43,33 @@ const RegisterPage = () => {
               <input
                 className={s.input}
                 type='text'
-                // value={userName}
-                // onChange={e => setUsername(Number(e.target.value))}
+                value={email}
+                onChange={e => setEmail(e.target.value)}
               />
             </div>
-            <div>
+
+            <div style={{ position: 'relative' }}>
+              <button className={s.eye} onClick={inputTypeHandler}>
+                {inputType === 'password' ? (
+                  <img
+                    src='/closedEye.svg'
+                    alt='closed Eye'
+                    style={{ width: '16px', height: '16px' }}
+                  />
+                ) : (
+                  <img
+                    src='/public/Eyes.svg'
+                    alt='openedEye'
+                    style={{ width: '16px', height: '16px' }}
+                  />
+                )}
+              </button>
               <label className={s.label}>Password</label>
               <input
                 className={s.input}
-                type='text'
-                // value={price}
-                // onChange={e => setPrice(Number(e.target.value))}
+                type={inputType}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
               />
             </div>
 
@@ -41,9 +77,9 @@ const RegisterPage = () => {
               <label className={s.label}>Confirm Password</label>
               <input
                 className={s.input}
-                type='text'
-                // value={price}
-                // onChange={e => setPrice(Number(e.target.value))}
+                type={inputType}
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
               />
             </div>
 
