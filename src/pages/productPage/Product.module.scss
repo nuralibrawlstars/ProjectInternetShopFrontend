@@ -21,9 +21,23 @@
 
 .qty {
   max-width: 80px;
+  border-radius: 4px;
 }
 
 .btnCard {
   @include button($primary, $primary-2, $primary, $white);
   // background: url('/whiteCard-icon.png');
+  border-radius: 4px;
+}
+
+.btnFavorite {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include button($white, $primary, $primary, $primary);
+  border-radius: 4px;
+  max-width: 120px;
+
+  .btnFavorite:hover {
+  }
 }

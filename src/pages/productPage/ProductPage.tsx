@@ -64,7 +64,10 @@ const ProductPage = () => {
                 <img src='/whiteCard-icon.png' style={{ width: '15px', marginRight: '10px' }} />
                 Add to card
               </button>
-              <button className={s.btnFavorite}>Favorite</button>
+              <button className={s.btnFavorite}>
+                <img src='/heart-icon.png' style={{ width: '20px', marginRight: '15px' }} />
+                Favorite
+              </button>
             </div>
           </div>
         </div>
