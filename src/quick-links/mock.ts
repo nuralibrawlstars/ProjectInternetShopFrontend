@@ -14,7 +14,7 @@ export const mockData = [
   {
     id: '3',
     link: '/kids',
-    imgSrc: '/child.png',
+    imgSrc: '/Kids.png',
     title: 'Kids’',
   },
 ];

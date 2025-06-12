@@ -1,13 +1,13 @@
 import type { FC } from 'react';
 import { NavLink } from 'react-router-dom';
-// import heartFilled from '../../public/Heart_filled.svg';
-// import heartEmpty from '../../public/heart-icon.png';
+// import heartFilled from '../../public/uploads/Heart_filled.svg';
+// import heartEmpty from '../../public/uploads/heart-icon.png';
 import Rating from '../rating/Rating';
 import type { ProductType } from '../types/Product-type';
 import s from './Card.module.scss';
 
 const Card: FC<Omit<ProductType, 'category'>> = ({ _id, rating, title, price, image }) => {
-  let cardImage = '/clothes.png';
+  let cardImage = '/Kids.png';
   const apiURL = 'http://localhost:8000';
   if (image) {
     cardImage = apiURL + '/uploads/' + image;

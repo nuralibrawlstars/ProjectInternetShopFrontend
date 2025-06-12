@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Rating from '../../rating/Rating';
 import type { ProductType } from '../../types/Product-type';
 import s from './Product.module.scss';
 
@@ -38,19 +39,33 @@ const ProductPage = () => {
   return (
     <>
       <div className='container'>
-        <p>{product.title}</p>
+        <p className={s.title}>{product.title}</p>
         <div className={s.card}>
           <div>
             <img src={product.image}></img>
           </div>
 
-          <div>
-            <p>{product.price}</p>
-            <p>{product.rating}</p>
+          <div style={{ position: 'relative' }}>
+            <p className={s.price}>$ {product.price}</p>
+            <Rating rating={product.rating} />
 
-            <button>1</button>
-            <button>add to card</button>
-            <button>favorite</button>
+            <b>opisanie: </b>
+            {product.description}
+
+            <div className={s.btnWrap}>
+              {/* <select name="select">
+
+                 <option value="value1">Значение 1</option>
+                 <option value="value2" selected>Значение 2</option>
+                 <option value="value3">Значение 3</option>
+               </select>  */}
+              <input type='number' defaultValue={1} className={s.qty} min={1} />
+              <button className={s.btnCard}>
+                <img src='/whiteCard-icon.png' style={{ width: '15px', marginRight: '10px' }} />
+                Add to card
+              </button>
+              <button className={s.btnFavorite}>Favorite</button>
+            </div>
           </div>
         </div>
       </div>

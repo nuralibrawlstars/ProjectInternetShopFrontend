@@ -1,6 +1,6 @@
-import s from './Rating.module.scss';
 import starFilled from '../../public/Star_filled.svg';
 import starEmpty from '../../public/Star_outline.svg';
+import s from './Rating.module.scss';
 
 interface RatingProps {
   rating: number;

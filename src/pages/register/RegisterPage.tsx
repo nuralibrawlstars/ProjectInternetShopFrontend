@@ -83,11 +83,7 @@ const RegisterPage = () => {
                     style={{ width: '16px', height: '16px' }}
                   />
                 ) : (
-                  <img
-                    src='/public/Eyes.svg'
-                    alt='openedEye'
-                    style={{ width: '16px', height: '16px' }}
-                  />
+                  <img src='/Eyes.svg' alt='openedEye' style={{ width: '16px', height: '16px' }} />
                 )}
               </button>
               <label className={s.label}>Password</label>
