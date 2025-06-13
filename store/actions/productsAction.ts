@@ -1,13 +1,13 @@
 import axios from 'axios';
 import axiosApi from '../../axiosApi';
 import type { AppDispatch, RootState } from '../index';
-import type {
+import {
   addProduct,
   deleteProduct,
   fetchProductsFailure,
   fetchProductsRequest,
   fetchProductsSuccess,
-  Product,
+  type Product,
 } from '../reducers/productsSlice';
 
 export const fetchProductsAsync = () => async (dispatch: AppDispatch) => {

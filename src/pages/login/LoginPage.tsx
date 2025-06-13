@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
+import type { AppDispatch } from '../../../store';
+import { loginUserAsync } from '../../../store/actions/usersAction';
 import s from './Login.module.scss';
 
 const LoginPage = () => {
@@ -9,6 +12,7 @@ const LoginPage = () => {
   const [inputType, setInputType] = useState('password');
 
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const submitFormHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,6 +24,7 @@ const LoginPage = () => {
         };
 
         const response = await axios.post('http://localhost:8000/users/sessions', user);
+        dispatch(loginUserAsync(user));
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
         navigate('/');
