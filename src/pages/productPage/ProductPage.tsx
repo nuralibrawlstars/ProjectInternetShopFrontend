@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import type { AppDispatch, RootState } from '../../../store';
+import { logoutUserAsync } from '../../../store/actions/usersAction';
 import Rating from '../../rating/Rating';
 import type { ProductType } from '../../types/Product-type';
 import s from './Product.module.scss';
@@ -14,27 +17,71 @@ const ProductPage = () => {
     image: '',
     rating: 0,
     category: '',
+    isFavorite: false,
   });
   const { id } = useParams<{ id?: string }>();
 
-  useEffect(() => {
-    const getProductById = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/products/${id}`);
-        let cardImage = '/clothes.png';
-        const apiURL = 'http://localhost:8000';
-        if (response.data.image) {
-          cardImage = apiURL + '/uploads/' + response.data.image;
-          response.data.image = cardImage;
-        }
+  const user = useSelector((state: RootState) => state.users.user);
+  console.log(user);
+  const navigate = useNavigate();
 
-        setProduct(response.data);
-      } catch (error) {
-        console.error(error);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const getProductById = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/products/${id}`);
+      let cardImage = '/clothes.png';
+      const apiURL = 'http://localhost:8000';
+      if (response.data.image) {
+        cardImage = apiURL + '/uploads/' + response.data.image;
+        response.data.image = cardImage;
       }
-    };
+
+      setProduct(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
     getProductById();
   }, [id]);
+
+  const handleToggleFavorite = async () => {
+    const token = user?.token;
+    console.log(user);
+    if (!token) {
+      alert('Необходимо авторизоваться!');
+      navigate('/login');
+      return;
+    }
+    try {
+      const method = product.isFavorite ? 'delete' : 'post';
+      const data = {
+        userId: user._id,
+      };
+      await axios({
+        method,
+        url: `http://localhost:8000/favorites/${id}`,
+        data,
+      });
+      getProductById();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errMsg = error.response?.data?.message || error.message;
+        if (errMsg.includes('jwt expired')) {
+          alert('Сессия истекла. Пожалуйста, авторизуйтесь ещё раз.');
+          dispatch(logoutUserAsync());
+          localStorage.removeItem('state');
+          navigate('/login');
+          return;
+        }
+        alert(`Ошибка: ${errMsg}`);
+      } else {
+        console.error(error);
+      }
+    }
+  };
 
   return (
     <>
@@ -53,19 +100,17 @@ const ProductPage = () => {
             {product.description}
 
             <div className={s.btnWrap}>
-              {/* <select name="select">
-
-                 <option value="value1">Значение 1</option>
-                 <option value="value2" selected>Значение 2</option>
-                 <option value="value3">Значение 3</option>
-               </select>  */}
               <input type='number' defaultValue={1} className={s.qty} min={1} />
               <button className={s.btnCard}>
                 <img src='/whiteCard-icon.png' style={{ width: '15px', marginRight: '10px' }} />
                 Add to card
               </button>
-              <button className={s.btnFavorite}>
-                <img src='/heart-icon.png' style={{ width: '20px', marginRight: '15px' }} />
+              <button className={s.btnFavorite} onClick={handleToggleFavorite}>
+                {!product.isFavorite ? (
+                  <img src='/heart-icon.png' style={{ width: '20px', marginRight: '15px' }} />
+                ) : (
+                  <img src='/Heart_filled.svg' style={{ width: '20px', marginRight: '15px' }} />
+                )}
                 Favorite
               </button>
             </div>

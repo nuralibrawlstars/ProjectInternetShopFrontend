@@ -35,6 +35,7 @@ const CatalogPage = () => {
             price={product.price}
             image={product.image}
             rating={product.rating}
+            isFavorite={product.isFavorite}
           />
         </div>
       ))}
