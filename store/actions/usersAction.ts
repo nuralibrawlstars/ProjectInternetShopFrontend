@@ -9,7 +9,9 @@ import {
   registerUserFailure,
   registerUserRequest,
   registerUserSuccess,
+  setCart,
   toggleFavorite,
+  type CartItem,
 } from '../reducers/usersSlice';
 export interface User {
   username: string;
@@ -89,5 +91,25 @@ export const toggleFavoriteAsync =
       } else {
         console.error(error);
       }
+    }
+  };
+
+export const handleAddToCartAsync =
+  (productId: string, quantity: number) =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
+    const state = getState();
+    const user = state.users.user;
+    if (!user || !user.token) return;
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/cart/${productId}`,
+        { quantity },
+        { headers: { Authorization: user.token } }
+      );
+      const newCart: CartItem[] = response.data.cart;
+
+      dispatch(setCart(newCart));
+    } catch (error) {
+      console.error(error);
     }
   };
