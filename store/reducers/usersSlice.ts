@@ -1,11 +1,19 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { ProductType } from '../../src/types/Product-type';
 
+interface CartItem {
+  product: ProductType;
+  quntity: number;
+  _id: string;
+}
 export interface User {
   username: string;
   email?: string;
   _id: string;
   token: string | null;
   role: string;
+  favorites: string[];
+  cart: CartItem[];
 }
 export interface UserState {
   registered: boolean;
@@ -60,6 +68,17 @@ const usersSlice = createSlice({
       state.user = null;
       state.registered = false;
     },
+    toggleFavorite(state, action: PayloadAction<string>) {
+      if (state.user) {
+        const id = action.payload;
+        const index = state.user.favorites.indexOf(id);
+        if (index === -1) {
+          state.user.favorites.push(id);
+        } else {
+          state.user.favorites.splice(index, 1);
+        }
+      }
+    },
   },
 });
 
@@ -71,6 +90,7 @@ export const {
   loginUserSuccess,
   loginUserFailure,
   logoutUser,
+  toggleFavorite,
 } = usersSlice.actions;
 
 export default usersSlice.reducer;
