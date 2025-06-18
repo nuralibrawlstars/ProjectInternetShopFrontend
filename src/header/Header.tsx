@@ -56,8 +56,9 @@ const Header = () => {
               <img src='/heart-icon.png' alt='heart icon' />
               {user?.favorites.length}
             </NavLink>
-            <NavLink to='/cart'>
+            <NavLink to='/cart' className={s.link}>
               <img src='/cart-icon.png' alt='cart icon' />
+              {user?.cart.length}
             </NavLink>
           </div>
         </nav>
@@ -106,8 +107,9 @@ const Header = () => {
               <img src='/heart-icon.png' alt='heart icon' />
               {user?.favorites.length}
             </NavLink>
-            <NavLink to='/cart'>
+            <NavLink to='/cart' className={s.link}>
               <img src='/cart-icon.png' alt='cart icon' />
+              {user?.cart.length}
             </NavLink>
           </div>
         </Modal>

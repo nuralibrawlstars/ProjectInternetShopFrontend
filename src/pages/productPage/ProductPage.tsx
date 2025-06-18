@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import type { AppDispatch, RootState } from '../../../store';
-import { toggleFavoriteAsync } from '../../../store/actions/usersAction';
+import { handleAddToCartAsync, toggleFavoriteAsync } from '../../../store/actions/usersAction';
 import Rating from '../../rating/Rating';
 import type { ProductType } from '../../types/Product-type';
 import s from './Product.module.scss';
@@ -17,7 +17,6 @@ const ProductPage = () => {
     image: '',
     rating: 0,
     category: '',
-    isFavorite: false,
   });
   const { id } = useParams<{ id?: string }>();
 
@@ -53,6 +52,17 @@ const ProductPage = () => {
     dispatch(toggleFavoriteAsync(product._id));
   };
 
+  const handleAddToCart = async () => {
+    const qtyInput = document.querySelector('input[type="number"]') as HTMLInputElement | null;
+    const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+
+    if (!isNaN(quantity) && quantity > 0) {
+      dispatch(handleAddToCartAsync(product._id, quantity));
+    } else {
+      alert('Введите корректное количество');
+    }
+  };
+
   return (
     <>
       <div className='container'>
@@ -71,7 +81,7 @@ const ProductPage = () => {
 
             <div className={s.btnWrap}>
               <input type='number' defaultValue={1} className={s.qty} min={1} />
-              <button className={s.btnCard}>
+              <button className={s.btnCard} onClick={handleAddToCart}>
                 <img src='/whiteCard-icon.png' style={{ width: '15px', marginRight: '10px' }} />
                 Add to card
               </button>

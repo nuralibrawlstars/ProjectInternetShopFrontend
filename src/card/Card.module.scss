@@ -12,11 +12,26 @@ img {
   border-radius: 4px;
 }
 
+.binBtn {
+  border-color: transparent;
+  background: white;
+  image {
+    width: 16px;
+    height: 16px;
+  }
+}
+.titleWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 0 8px;
+}
+
 .title {
   font-size: $large-font-size;
   font-weight: 400px;
   color: $gray-800;
-  margin: 16px 0 8px;
+  margin: 0;
 }
 
 .price {
